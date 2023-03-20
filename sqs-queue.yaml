@@ -1,0 +1,20 @@
+apiVersion: sqs.services.k8s.aws/v1alpha1
+kind: Queue
+metadata:
+ name: sqs-queue-demo-ack
+ annotations:
+   services.k8s.aws/region: us-east-1
+spec:
+ queueName: sqs-queue-demo-ack
+ policy: |
+    {
+      "Statement": [{
+        "Sid": "__owner_statement",
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "AWS_ACCOUNT_ID"
+        },
+        "Action": "sqs:SendMessage",
+        "Resource": "arn:aws:sqs:us-east-1:AWS_ACCOUNT_ID:sqs-queue-demo-ack"
+      }]
+    }
